@@ -588,3 +588,38 @@ HubTab:CreateButton({
         Rayfield:Notify({ Title = "Copied to Clipboard", Content = "Discord invite link copied!", Duration = 3 })
     end
 })
+
+HubTab:CreateButton({
+    Name = "Infinite Yield",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+    end
+})
+
+local SuggestionsTab = Window:CreateTab("Suggestions", 4483362458)
+
+SuggestionsTab:CreateLabel("Got suggestions or want to chat? Add me on Discord:")
+
+SuggestionsTab:CreateLabel("Discord: theshortestofthemall")
+
+SuggestionsTab:CreateButton({
+    Name = "Copy Discord Username",
+    Callback = function()
+        if setclipboard then
+            setclipboard("theshortestofthemall")
+            Rayfield:Notify({
+                Title = "Copied!",
+                Content = "Discord username copied to clipboard.",
+                Duration = 3
+            })
+        else
+            Rayfield:Notify({
+                Title = "Error",
+                Content = "Clipboard not supported in your executor.",
+                Duration = 3
+            })
+        end
+    end
+})
+
+SuggestionsTab:CreateLabel("DM me for suggestions 🙂")
