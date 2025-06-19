@@ -514,7 +514,7 @@ Tab:CreateToggle({
 
 Tab:CreateSlider({
     Name = "Aimbot FOV",
-    Range = {50, 500},
+    Range = {0, 500},
     Increment = 1,
     Suffix = "Radius",
     CurrentValue = AimbotFOV,
