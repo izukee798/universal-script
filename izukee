@@ -624,6 +624,7 @@ HubTab:CreateButton({
     end
 })
 
+HubTab:CreateLabel("Idk what else to put here")
 local SuggestionsTab = Window:CreateTab("Suggestions", 4483362458)
 
 SuggestionsTab:CreateLabel("Got suggestions or want to chat? Add me on Discord:")
