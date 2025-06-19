@@ -523,3 +523,68 @@ Tab:CreateSlider({
         AimbotFOV = value
     end
 })
+
+local HubTab = Window:CreateTab("Scripts", 4483362458)
+
+-- Speed Hub X
+HubTab:CreateButton({
+    Name = "Speed Hub X",
+    Callback = function()
+        local success, err = pcall(function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua", true))()
+        end)
+        if not success then
+            Rayfield:Notify({ Title = "Script Execution Error", Content = tostring(err), Duration = 5 })
+        end
+    end
+})
+
+HubTab:CreateButton({
+    Name = "Copy Speed Hub X Discord Invite",
+    Callback = function()
+        pcall(setclipboard, "https://discord.gg/speedhubx")
+        Rayfield:Notify({ Title = "Copied to Clipboard", Content = "Discord invite link copied!", Duration = 3 })
+    end
+})
+
+-- No Lag Hub
+HubTab:CreateButton({
+    Name = "No Lag Hub",
+    Callback = function()
+        local success, err = pcall(function()
+            loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/NoLag-id/No-Lag-HUB/refs/heads/main/Loader/LoaderV1.lua"))()
+        end)
+        if not success then
+            Rayfield:Notify({ Title = "Script Execution Error", Content = tostring(err), Duration = 5 })
+        end
+    end
+})
+
+HubTab:CreateButton({
+    Name = "Copy No Lag Hub Discord Invite",
+    Callback = function()
+        pcall(setclipboard, "https://discord.gg/no-lag")
+        Rayfield:Notify({ Title = "Copied to Clipboard", Content = "Discord invite link copied!", Duration = 3 })
+    end
+})
+
+-- UB Hub (Key required)
+HubTab:CreateButton({
+    Name = "UB Hub (Key in Discord server)",
+    Callback = function()
+        local success, err = pcall(function()
+            loadstring(game:HttpGet("https://gitlab.com/r_soft/main/-/raw/main/LoadUB.lua"))()
+        end)
+        if not success then
+            Rayfield:Notify({ Title = "Script Execution Error", Content = tostring(err), Duration = 5 })
+        end
+    end
+})
+
+HubTab:CreateButton({
+    Name = "Copy UB Hub Discord Invite",
+    Callback = function()
+        pcall(setclipboard, "https://discord.gg/PbrMAwZdSy")
+        Rayfield:Notify({ Title = "Copied to Clipboard", Content = "Discord invite link copied!", Duration = 3 })
+    end
+})
