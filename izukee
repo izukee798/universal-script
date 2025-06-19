@@ -145,7 +145,7 @@ Tab:CreateToggle({
     end
 })
 
--- Fly Toggle + Speed Slider
+-- Fly Toggle and blah blah blah
 local flying = false
 local flySpeed = 50
 local bodyVelocity = nil
