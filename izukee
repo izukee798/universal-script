@@ -477,6 +477,95 @@ local function getClosestPlayer()
     return closestPlayer
 end
 
+Tab:CreateToggle({
+    Name = "Aimbot (Center Mass)",
+    CurrentValue = false,
+    Callback = function(state)
+        AimbotEnabled = state
+        if not state then
+            RunService:UnbindFromRenderStep("Aimbot")
+        end
+    end
+})
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+
+-- Variables
+local LocalPlayer = Players.LocalPlayer
+local Camera = workspace.CurrentCamera
+local Mouse = LocalPlayer:GetMouse()
+local AimbotEnabled = false
+local AimbotFOV = 150
+
+-- FOV Circle
+local FOVCircle = Drawing.new("Circle")
+FOVCircle.Color = Color3.fromRGB(255, 255, 255)
+FOVCircle.Thickness = 1
+FOVCircle.Filled = false
+FOVCircle.Radius = AimbotFOV
+FOVCircle.NumSides = 64
+FOVCircle.Visible = true
+
+-- Update FOV Circle
+RunService.RenderStepped:Connect(function()
+    FOVCircle.Position = Vector2.new(Mouse.X, Mouse.Y + 36)
+    FOVCircle.Radius = AimbotFOV
+end)
+
+-- Get closest player inside FOV (center mass)
+local function GetClosestPlayer()
+    local closest = nil
+    local shortestDistance = math.huge
+    local mousePos = Vector2.new(Mouse.X, Mouse.Y)
+
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            local part = player.Character.HumanoidRootPart
+            local screenPos, onScreen = Camera:WorldToViewportPoint(part.Position)
+            if onScreen then
+                local distance = (Vector2.new(screenPos.X, screenPos.Y) - mousePos).Magnitude
+                if distance < shortestDistance and distance <= AimbotFOV then
+                    shortestDistance = distance
+                    closest = part
+                end
+            end
+        end
+    end
+
+    return closest
+end
+
+-- Toggle Aimbot with Right Click
+UserInputService.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton2 and AimbotEnabled then
+        RunService:BindToRenderStep("Aimbot", 300, function()
+            local targetPart = GetClosestPlayer()
+            if targetPart then
+                local cameraCFrame = Camera.CFrame
+                Camera.CFrame = CFrame.new(cameraCFrame.Position, targetPart.Position)
+            end
+        end)
+    end
+end)
+
+UserInputService.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton2 then
+        RunService:UnbindFromRenderStep("Aimbot")
+    end
+end)
+
+Tab:CreateSlider({
+    Name = "FOV Radius",
+    Range = {50, 400},
+    Increment = 1,
+    CurrentValue = AimbotFOV,
+    Callback = function(val)
+        AimbotFOV = val
+    end
+})
+
 -- Aimbot logic: right mouse button hold locks camera to target's head
 UserInputService.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton2 then -- right click
