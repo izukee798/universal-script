@@ -433,49 +433,6 @@ Tab:CreateToggle({
     end
 })
 
--- Aimbot variables
-local AimbotEnabled = false
-local AimbotFOV = 100
-local Mouse = game.Players.LocalPlayer:GetMouse()
-
--- Create FOV Circle
-local FOVCircle = Drawing.new("Circle")
-FOVCircle.Color = Color3.new(1, 1, 1) -- white
-FOVCircle.Thickness = 1
-FOVCircle.NumSides = 64
-FOVCircle.Radius = AimbotFOV
-FOVCircle.Filled = false
-FOVCircle.Visible = true
-FOVCircle.Transparency = 1
-
--- Update FOV Circle position & size every frame
-RunService.RenderStepped:Connect(function()
-    FOVCircle.Position = Vector2.new(Mouse.X, Mouse.Y + 36) -- Offset for camera
-    FOVCircle.Radius = AimbotFOV
-end)
-
--- Function to find closest player head inside FOV
-local function getClosestPlayer()
-    local closestPlayer = nil
-    local shortestDistance = math.huge
-    local mousePos = Vector2.new(Mouse.X, Mouse.Y)
-
-    for _, player in pairs(Players:GetPlayers()) do
-        if player ~= LocalPlayer and player.Character and player.Character:FindFirstChild("Head") and player.Character:FindFirstChild("Humanoid") and player.Character.Humanoid.Health > 0 then
-            local headPos, onScreen = Camera:WorldToViewportPoint(player.Character.Head.Position)
-            if onScreen then
-                local screenPos = Vector2.new(headPos.X, headPos.Y)
-                local distance = (screenPos - mousePos).Magnitude
-                if distance < shortestDistance and distance <= AimbotFOV then
-                    shortestDistance = distance
-                    closestPlayer = player
-                end
-            end
-        end
-    end
-
-    return closestPlayer
-end
 
 Tab:CreateToggle({
     Name = "Aimbot (Center Mass)",
