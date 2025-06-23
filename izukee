@@ -503,7 +503,7 @@ UserInputService.InputEnded:Connect(function(input)
     end
 end)
 
--- Add toggle and slider for aimbot in your UI (modify if needed)
+-- Add toggle and slider for aimbottttttttttttttttt
 Tab:CreateToggle({
     Name = "Aimbot ( FOR PC ONLY)",
     CurrentValue = false,
